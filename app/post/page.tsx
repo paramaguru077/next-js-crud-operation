@@ -87,7 +87,7 @@ const Page = () => {
       const data:User[] = await getUsers(page)
       const usersDataStatus = data.map(user => ({
         ...user,
-        status: Math.random() > 0.5 ? 'active' : 'inactive'
+        status: (Math.random() > 0.5 ? 'active' : 'inactive') as 'active' | 'inactive'
       }))
       setUser(usersDataStatus)
     } catch (e) {
