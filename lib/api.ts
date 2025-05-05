@@ -51,7 +51,7 @@ export const updateUser = async(id,updateUser)=>{
         return {...res.data,id}
     }
     catch(e){
-        console.log(error);
+        console.log(e);
         return null;
 
     }

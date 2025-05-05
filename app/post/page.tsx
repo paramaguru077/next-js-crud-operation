@@ -26,17 +26,24 @@ import {
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { userFormSchema, UserFormValues } from '../../schema/Formdata'
-
+type User = {
+  id: number
+  first_name: string
+  last_name: string
+  email: string
+  status: 'active' | 'inactive'
+  avatar: string
+}
 const Page = () => {
-  const [users, setUser] = useState([])
-  const [page, setPage] = useState(1)
-  const [search, setSearch] = useState("")
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [open, setOpen] = useState(false)
-  const [editingUser, setEditing] = useState(null)
-  const [viewingUser, setViewingUser] = useState(null)
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [deletingUserId, setDeletingUserId] = useState(null)
+  const [users, setUser] = useState<User[]>([])
+  const [page, setPage] = useState<number>(1)
+  const [search, setSearch] = useState<string>('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all')
+  const [open, setOpen] = useState<boolean>(false)
+  const [editingUser, setEditing] = useState<User | null>(null)
+  const [viewingUser, setViewingUser] = useState<User | null>(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false)
+  const [deletingUserId, setDeletingUserId] = useState<number | null>(null)
 
   const {
     register,
@@ -77,7 +84,7 @@ const Page = () => {
 
   const fetchUsers = async () => {
     try {
-      const data = await getUsers(page)
+      const data:User[] = await getUsers(page)
       const usersDataStatus = data.map(user => ({
         ...user,
         status: Math.random() > 0.5 ? 'active' : 'inactive'
@@ -122,17 +129,17 @@ const Page = () => {
     setOpen(false)
   }
 
-  const handleEdit = (user) => {
+  const handleEdit = (user:User) => {
     setEditing(user)
     setOpen(true)
   }
 
-  const handleDelete = (userId) => {
+  const handleDelete = (userId:number) => {
     setDeletingUserId(userId)
     setDeleteDialogOpen(true)
   }
 
-  const handleView = (user) => {
+  const handleView = (user:User) => {
     setViewingUser(user)
   }
 
